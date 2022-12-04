@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../style.css" />
 
     <title>Document</title>
-</head>
-<body>
-    <h1 class="text-3xl text-red-600">Welcome to login page</h1>
-    <button id="login-to-spotify" type="button">Login</button>
-    <script src="login.js"></script>
-</body>
+  </head>
+  <body class="h-screen bg-green">
+    <main class="flex w-full h-full justify-center items-center">
+      <section class="flex items-center flex-col gap-8">
+        <img src="../images/Spotify_Logo_RGB_Black.png" alt="sptify logo" srcset="" />
+        <input
+          id="login-to-spotify"
+          type="button"
+          value="Login To Spotify"
+          class="h-12 w-64 rounded-md bg-dark text-white hover:cursor-pointer"
+        />
+      </section>
+    </main>
+    <script type="module" src="login.js"></script>
+  </body>
 </html>

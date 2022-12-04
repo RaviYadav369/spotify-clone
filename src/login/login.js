@@ -1,8 +1,10 @@
-const CLIENT_ID = "566d0cf5477d4f48831a79761bb96c37"
-const scopes = "user-top-read user-follow-read playlist-read-private user-library-read"
-const REDIRECT_URL = "http://localhost:3000/login/login.html";
-const App_URL = "http://localhost:3000"
-const ACCESS_TOKEN_KEY = "accessToken"
+
+import { ACCESS_TOKEN, EXPIRE_IN, TOKEN_TYPE } from "../common"
+
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+const scopes = "user-top-read user-follow-read playlist-read-private user-library-read";
+const REDIRECT_URL = import.meta.env.VITE_REDIRECT_URL;
+const APP_URL = import.meta.env.VITE_APP_URL;
 
 const authoriseUser = () => {
     const url = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URL}&scope=${scopes}&show_dialog=true`;
@@ -11,24 +13,25 @@ const authoriseUser = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const loginButton = document.querySelector('#login-to-spotify')
+    
+    const loginButton = document.getElementById('login-to-spotify');
     loginButton.addEventListener("click", authoriseUser)
 
 })
 
 window.setItemsInLocalStorage = ({ accessToken, tokenType, expireIn }) => {
-    localStorage.setItem("accessToken", accessToken)
-    localStorage.setItem("tokenType", tokenType)
-    localStorage.setItem("expire-in", expireIn)
-    window.location.href=`${App_URL}`
+    localStorage.setItem(ACCESS_TOKEN, accessToken)
+    localStorage.setItem(TOKEN_TYPE, tokenType)
+    localStorage.setItem(EXPIRE_IN, (Date.now() +(expireIn*1000)))
+    window.location.href=`${APP_URL}`
 
 }
 
 window.addEventListener('load', () => {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (accessToken) {
         console.log(accessToken);
-        window.location.href = `${App_URL}/dashboard/dashboard.html`
+        window.location.href = `${APP_URL}/dashboard/dashboard.html`
     }
 
     if (window.opener !== null && !window.opener.closed) {
