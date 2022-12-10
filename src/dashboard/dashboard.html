@@ -13,8 +13,8 @@
       class="h-full grid grid-template-areas grid-cols-[250px_1fr] grid-rows-[1fr_auto]"
     >
       <aside class="sidenav">aside</aside>
-      <section class="content">
-        <header class="border-2 border-solid px-8 py-4">
+      <article class="content bg-transparent overflow-auto relative">
+        <header class="header bg-transparent px-8 py-2">
           <nav class="flex justify-end">
             <button
               id="user-profile-btn"
@@ -54,10 +54,42 @@
             </button>
           </nav>
         </header>
-        <article class="p-4">
-          <h1 class="text-2xl">Featured</h1>
+        <article
+          id="cover-content"
+          class="absolute top-0 px-4 bg-gradient-to-b from-light-black to-black-base w-full h-72 -z-[1] grid content-center"
+        >
+          <h2 class="text-6xl">Hello Ravi</h2>
+        </article>
+        <section id="page-content" class="bg-black-base mt-48">
+        
+          <!-- <nav>
+            <ul class="grid grid-cols-[50px_2fr_1fr_50px] gap-4 text-secondary ">
+              <li>$</li>
+              <li>Title</li>
+              <li>Album</li>
+              <li>⏱️</li>
+            </ul>
+          </nav> -->
+        </header>
+        <section class="px-8" id="tracks">
+          <section class="grid items-center tracks justify-items-start rounded-md hover:bg-light-black  grid-cols-[50px_2fr_1fr_50px] gap-4 text-secondary ">
+            <!-- <p>1</p>
+            <section class="grid grid-cols-2 gap-2">
+              <img class="h8 w-8" src="" alt="" />
+              <article class="flex flex-col gap-1">
+                <h2 class="text-primary text-xl">songs</h2>
+                <p class="text-sm ">artists</p>
+              </article>
+            </section>
+            <p>album</p>
+            <p>1:36</p> -->
+          </section>
+        </section>
+      </section>
+        <!-- <article class="p-4">
+          <h1 class="text-2xl mb-4">Featured</h1>
           <section id="featured-playlist-items" class="featured-songs grid grid-cols-auto-fill-cards gap-4">
-            <!-- <section class="rounded p-4 border-solid border-2">
+            <section class="rounded p-4 border-solid border-2">
               <img src="" alt="" />
               <h2 class="text-sm">Name</h2>
               <h3 class="text-xs">description</h3>
@@ -66,10 +98,25 @@
               <img src="" alt="" />
               <h2>Name</h2>
               <h3>description</h3>
-            </section> -->
+            </section> 
           </section>
         </article>
-      </section> 
+        <article class="p-4">
+          <h1 class="text-2xl mb-4">Top List</h1>
+          <section id="top-playlist-items" class="featured-songs grid grid-cols-auto-fill-cards gap-4">
+             <section class="rounded p-4 border-solid border-2">
+              <img src="" alt="" />
+              <h2 class="text-sm">Name</h2>
+              <h3 class="text-xs">description</h3>
+            </section>
+            <section>
+              <img src="" alt="" />
+              <h2>Name</h2>
+              <h3>description</h3>
+            </section> 
+          </section>
+        </article> -->
+      </article>
       <footer class="now-playing">now-playing</footer>
     </main>
     <script src="dashboard.js" type="module"></script>

@@ -9,6 +9,9 @@ module.exports = {
         "green":"#1DB954",
         "dark":"#191414",
         "light-black":"#282828",
+        "black-primary":"#191414",
+        "black-base":"#121212",
+        "black-secondary":"#171818",
         "primary":"#FFFFFF",
         "secondary":"#b3b3b3",
         "gray":"#535353"
@@ -18,5 +21,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }

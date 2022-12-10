@@ -4,11 +4,18 @@ export const EXPIRE_IN = "EXPIRE_IN"
 const APP_URL = import.meta.env.VITE_APP_URL;
 export const ENDPOINT = {
     userInfo: "me",
-    featurePlaylist :"browse/featured-playlists?limit=5"
+    featurePlaylist :"browse/featured-playlists?limit=5",
+    toplist:"browse/categories/toplists/playlists?limit=10",
+    playlist :"playlists"
 }
 export const logout = () => {
     localStorage.removeItem(ACCESS_TOKEN)
     localStorage.removeItem(TOKEN_TYPE)
     localStorage.removeItem(EXPIRE_IN)
     window.location.href = `${APP_URL}`
+}
+
+export const SECTIONTYPE ={
+    DASHBOARD :"DASHBOARD",
+    PLAYLIST:"PLAYLIST"
 }
