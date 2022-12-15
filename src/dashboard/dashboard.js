@@ -22,7 +22,10 @@ const onClickPlaylistItem = (event, id) => {
 }
 
 const loadPlaylist = async (endpoint, elementId) => {
-    const { playlists: { items } } = await fetchRequest(endpoint)
+    const response = await fetchRequest(endpoint)
+   
+    const {items}  = response.playlists  ? response.playlists : response.albums 
+
     const playlistItemsContainer = document.querySelector(`#${elementId}`)
 
     for (let { name, description, images, id } of items) {
@@ -42,12 +45,13 @@ const loadPlaylist = async (endpoint, elementId) => {
 
 const loadPlaylists = () => {
     loadPlaylist(ENDPOINT.featurePlaylist, "featured-playlist-items")
+    loadPlaylist(ENDPOINT.newReleases, "new-released")
     loadPlaylist(ENDPOINT.toplist, "top-playlist-items")
 }
 
 const fillContentForDashboard = () => {
 
-    const playlistMap = new Map([["Featured", "featured-playlist-items"], ["Top Playlist", "top-playlist-items"]])
+    const playlistMap = new Map([["Featured", "featured-playlist-items"], ["New Playlist", "new-released"], ["Top Playlist", "top-playlist-items"]])
     const coverElement = document.querySelector("#cover-content")
     coverElement.innerHTML = `
       <section class="pt-4" >
@@ -248,9 +252,51 @@ const loadUserProfile = () => {
         }
         profileButton.addEventListener("click", onProfileClick)
         displayNameElement.textContent = displayName
-        resolve({ displayName })
+        resolve({ displayName, images })
     })
 
+
+}
+
+
+const onContentScroll = (event) => {
+
+    const { scrollTop } = event.target;
+    const header = document.querySelector(".header");
+    const coverElement = document.querySelector("#cover-content");
+    const totalHeight = coverElement.offsetHeight;
+    const fiftyPercentHeight = totalHeight / 2;
+    const coverOpacity = 100 - (scrollTop >= totalHeight ? 100 : (scrollTop / totalHeight) * 100);
+    coverElement.style.opacity = `${coverOpacity}%`;
+
+    let headerOpacity = 0;
+    // once 50% of cover element is crossed, start increasing the opacity
+    if (scrollTop >= fiftyPercentHeight && scrollTop <= totalHeight) {
+        let totatDistance = totalHeight - fiftyPercentHeight;
+        let coveredDistance = scrollTop - fiftyPercentHeight;
+        headerOpacity = (coveredDistance / totatDistance) * 100;
+    } else if (scrollTop > totalHeight) {
+        headerOpacity = 100;
+    } else if (scrollTop < fiftyPercentHeight) {
+        headerOpacity = 0;
+    }
+    header.style.background = `rgba(0 0 0 / ${headerOpacity}%)`
+
+    if (history.state.type === SECTIONTYPE.PLAYLIST) {
+        const playlistHeader = document.querySelector("#playlist-header");
+        if (headerOpacity >= 60) {
+            playlistHeader.classList.add("sticky", "bg-black-secondary", "px-8");
+            playlistHeader.classList.remove("mx-8");
+            playlistHeader.style.top = `${header.offsetHeight}px`;
+
+        } else {
+            playlistHeader.classList.remove("sticky", "bg-black-secondary", "px-8");
+            playlistHeader.classList.add("mx-8");
+            playlistHeader.style.top = `revert`;
+
+        }
+
+    }
 
 }
 
@@ -295,6 +341,8 @@ const loadSections = (section) => {
         console.log(section.playlistId);
         fillContentForPlaylist(section.playlistId)
     }
+    document.querySelector(".content").removeEventListener("scroll", onContentScroll);
+    document.querySelector(".content").addEventListener("scroll", onContentScroll);
 }
 
 const onUserPlaylistClick = (id) => {
